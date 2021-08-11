@@ -1,5 +1,5 @@
 [package]
-name = "rust_simple_image_interface"
+name = "simple_image_interface"
 version = "0.1.0"
 edition = "2018"
 
