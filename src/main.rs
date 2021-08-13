@@ -1,77 +1,40 @@
-extern crate image;
-extern crate rscam;
+use simple_image_interface::Camera;
+use std::env;
 
-use std::time::Instant;
-
-pub struct Benchmark {
-    start_time: Instant,
-}
-
-impl Benchmark {
-    pub fn set_start_time() -> Benchmark {
-        let now_time = Instant::now();
-        Benchmark {
-            start_time: now_time,
+fn my_image_proc(rgb_image: &image::RgbImage) -> () {
+    let width = rgb_image.width();
+    let height = rgb_image.height();
+    let mut gray_image = image::GrayImage::new(width, height);
+    // for example gray scale
+    for i in 0..width {
+        for j in 0..height {
+            let pixel = rgb_image.get_pixel(i, j);
+            let gray_pixel = [((pixel[0] as f32 * 0.2126) as u32
+                + (pixel[1] as f32 * 0.7152) as u32
+                + (pixel[2] as f32 * 0.0722) as u32) as u8; 1];
+            gray_image.put_pixel(i, j, image::Luma(gray_pixel));
         }
     }
-
-    pub fn print_bench_time(&self) -> () {
-        let end = self.start_time.elapsed();
-        println!(
-            "Process {}.{:03} msec",
-            end.as_micros() / 1000,
-            end.as_micros() % 1000,
-        );
-    }
+    println!("save gray scale image");
+    gray_image.save("data/sample.png").unwrap();
 }
 
 fn main() {
-    let mut camera = rscam::new("/dev/video0").unwrap();
-    camera
-        .start(&rscam::Config {
-            interval: (1, 50), // fps.
-            resolution: (1920, 1080),
-            format: b"RGB3",
-            ..Default::default()
-        })
-        .unwrap();
+    let args: Vec<String> = env::args().collect();
+    let interface;
 
-    for i in 0..100 {
-        let frame = camera.capture().unwrap();
+    if args.len() < 2 {
+        interface = Camera::new("/dev/video0", 640, 360, 330);
+    } else if &args[1] == "video" {
+        interface = Camera::new("/dev/video0", 640, 360, 330);
+    } else if &args[1] == "pic" {
+        interface = Camera::new("/dev/video0", 640, 360, 330);
+    } else {
+        interface = Camera::new("/dev/video0", 640, 360, 330);
     }
 
-    println!("capture");
-    let bench = Benchmark::set_start_time();
-    let frame = camera.capture().unwrap();
-    bench.print_bench_time();
-
-    println!("from_raw");
-    let bench = Benchmark::set_start_time();
-    let rgb_image = image::RgbImage::from_raw(640, 360, (&frame[..]).to_vec()).unwrap();
-    bench.print_bench_time();
-
-    rgb_image.save("data/test.png").unwrap();
-
-    println!("from_vec");
-    let bench = Benchmark::set_start_time();
-    let rgb_image_2 = image::RgbImage::from_vec(640, 360, (&frame[..]).to_vec()).unwrap();
-    bench.print_bench_time();
-
-    rgb_image_2.save("data/test_2.png").unwrap();
-
-    // for i in 0..(1920 * 1080 * 3) {
-    //     let pixel = buffer[i];
-    //     println!("{}: {}", i, pixel);
-    // }
-    // let mut count = 0;
-    // loop {
-    //     count += 1;
-    //     if 500 <= count {
-    //         let mut file = File::create(&format!("data/frame_{:>03}.jpg", count - 500)).unwrap();
-    //         file.write_all(&frame[..]).unwrap();
-    //     }
-    //     if (500 + 500) < count {
-    //         break;
-    //     }
-    // }
+    loop {
+        let image = interface.get_frame();
+        my_image_proc(&image);
+    }
 }
