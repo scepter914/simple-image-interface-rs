@@ -1,4 +1,3 @@
-use simple_image_interface::Camera;
 use std::env;
 
 fn my_image_proc(rgb_image: &image::RgbImage) -> () {
@@ -24,13 +23,17 @@ fn main() {
     let interface;
 
     if args.len() < 2 {
-        interface = Camera::new("/dev/video0", 640, 360, 330);
+        //interface = simple_image_interface::Camera::new("/dev/video0", 640, 360, 330);
+        interface = simple_image_interface::Picture::new("data/from_raw.png");
     } else if &args[1] == "video" {
-        interface = Camera::new("/dev/video0", 640, 360, 330);
+        //interface = simple_image_interface::Camera::new("/dev/video0", 640, 360, 330);
+        interface = simple_image_interface::Picture::new("data/from_raw.png");
     } else if &args[1] == "pic" {
-        interface = Camera::new("/dev/video0", 640, 360, 330);
+        interface = simple_image_interface::Picture::new("data/from_raw.png");
+        //interface = simple_image_interface::Camera::new("/dev/video0", 640, 360, 330);
     } else {
-        interface = Camera::new("/dev/video0", 640, 360, 330);
+        interface = simple_image_interface::Picture::new("data/from_raw.png");
+        //interface = simple_image_interface::Camera::new("/dev/video0", 640, 360, 330);
     }
 
     loop {

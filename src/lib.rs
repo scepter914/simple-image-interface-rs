@@ -6,8 +6,8 @@ use log::{debug, error, info, trace, warn};
 
 pub struct Camera {
     camera: rscam::Camera,
-    height: u32,
     width: u32,
+    height: u32,
 }
 
 impl Camera {
@@ -21,10 +21,11 @@ impl Camera {
                 ..Default::default()
             })
             .unwrap();
+        info!("Camera {}: {} * {}, {} fps", device_, width_, height_, fps_);
         return Camera {
             camera: camera_,
-            height: height_,
             width: width_,
+            height: height_,
         };
     }
 
@@ -33,5 +34,29 @@ impl Camera {
         let rgb_image =
             image::RgbImage::from_vec(self.width, self.height, (&frame[..]).to_vec()).unwrap();
         return rgb_image;
+    }
+}
+
+pub struct Picture {
+    image: image::RgbImage,
+    width: u32,
+    height: u32,
+}
+
+impl Picture {
+    pub fn new(image_path: &str) -> Picture {
+        let image_ = image::open(image_path).unwrap().to_rgb8();
+        let width_ = image_.width();
+        let height_ = image_.height();
+        info!("Picture {}: {} * {}", image_path, width_, height_);
+        return Picture {
+            image: image_,
+            width: width_,
+            height: height_,
+        };
+    }
+
+    pub fn get_frame(self) -> image::RgbImage {
+        return self.image;
     }
 }
