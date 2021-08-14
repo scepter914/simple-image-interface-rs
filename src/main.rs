@@ -1,6 +1,6 @@
 use std::env;
 
-use simple_image_interface::{Camera, ImageInterface, Picture};
+use simple_image_interface::SimpleImageInterface;
 
 fn my_image_proc(rgb_image: &image::RgbImage) -> () {
     let width = rgb_image.width();
@@ -30,22 +30,16 @@ fn main() {
     .unwrap();
 
     let args: Vec<String> = env::args().collect();
-    let interface: &dyn ImageInterface;
-    let camera: Camera;
-    let picture: Picture;
+    let mut interface: SimpleImageInterface;
 
     if args.len() < 2 {
-        camera = simple_image_interface::Camera::new("/dev/video0", 640, 360, 330);
-        interface = &camera as &Camera;
+        interface = SimpleImageInterface::init_camera("/dev/video0", 640, 360, 330);
     } else if &args[1] == "video" {
-        camera = simple_image_interface::Camera::new("/dev/video0", 640, 360, 330);
-        interface = &camera as &Camera;
+        interface = SimpleImageInterface::init_camera("/dev/video0", 640, 360, 330);
     } else if &args[1] == "pic" {
-        picture = simple_image_interface::Picture::new("data/from_raw.png");
-        interface = &picture as &Picture;
+        interface = SimpleImageInterface::init_picture("data/from_raw.png");
     } else {
-        camera = simple_image_interface::Camera::new("/dev/video0", 640, 360, 330);
-        interface = &camera as &Camera;
+        interface = SimpleImageInterface::init_camera("/dev/video0", 640, 360, 330);
     }
 
     loop {

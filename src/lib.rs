@@ -4,8 +4,44 @@ extern crate rscam;
 
 use log::{debug, error, info, trace, warn};
 
-pub trait ImageInterface {
-    fn get_frame(&mut self) -> Option<image::RgbImage>;
+pub struct SimpleImageInterface {
+    mode: String,
+    camera: Option<Camera>,
+    picture: Option<Picture>,
+}
+
+impl SimpleImageInterface {
+    pub fn init_camera(
+        device_: &str,
+        width_: u32,
+        height_: u32,
+        fps_: u32,
+    ) -> SimpleImageInterface {
+        return SimpleImageInterface {
+            mode: "Camera".to_string(),
+            camera: Some(Camera::new(device_, width_, height_, fps_)),
+            picture: None,
+        };
+    }
+
+    pub fn init_picture(image_path: &str) -> SimpleImageInterface {
+        SimpleImageInterface {
+            mode: "Picture".to_string(),
+            camera: None,
+            picture: Some(Picture::new(image_path)),
+        }
+    }
+
+    pub fn get_frame(&self) -> Option<image::RgbImage> {
+        match &self.mode[..] {
+            "Camera" => self.camera.as_ref().unwrap().get_frame(),
+            "Picture" => {
+                self.picture.unwrap().set_final_frame();
+                self.picture.as_ref().unwrap().get_frame()
+            }
+            _ => None,
+        }
+    }
 }
 
 pub struct Camera {
@@ -32,10 +68,7 @@ impl Camera {
             height: height_,
         };
     }
-}
-
-impl ImageInterface for Camera {
-    fn get_frame(&mut self) -> Option<image::RgbImage> {
+    pub fn get_frame(&self) -> Option<image::RgbImage> {
         let frame: rscam::Frame = self.camera.capture().unwrap();
         let rgb_image =
             image::RgbImage::from_vec(self.width, self.height, (&frame[..]).to_vec()).unwrap();
@@ -63,14 +96,15 @@ impl Picture {
             is_final_frame: false,
         };
     }
-}
 
-impl ImageInterface for Picture {
-    fn get_frame(&mut self) -> Option<image::RgbImage> {
+    pub fn set_final_frame(&mut self) -> () {
+        self.is_final_frame = true;
+    }
+
+    pub fn get_frame(&self) -> Option<image::RgbImage> {
         let mut output_image = image::RgbImage::new(self.width, self.height);
         output_image.copy_from_slice(&self.image);
         if !self.is_final_frame {
-            self.is_final_frame = true;
             return Some(output_image);
         } else {
             return None;

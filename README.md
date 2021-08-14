@@ -7,3 +7,7 @@
   - image (png, jpg)
 
 ## Get started (Under construction)
+
+## Note
+
+- use not trait object but lapper struct to improve execution speed
