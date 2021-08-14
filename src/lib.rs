@@ -32,13 +32,10 @@ impl SimpleImageInterface {
         }
     }
 
-    pub fn get_frame(&self) -> Option<image::RgbImage> {
+    pub fn get_frame(&mut self) -> Option<image::RgbImage> {
         match &self.mode[..] {
             "Camera" => self.camera.as_ref().unwrap().get_frame(),
-            "Picture" => {
-                self.picture.unwrap().set_final_frame();
-                self.picture.as_ref().unwrap().get_frame()
-            }
+            "Picture" => self.picture.as_mut().unwrap().get_frame(),
             _ => None,
         }
     }
@@ -97,13 +94,10 @@ impl Picture {
         };
     }
 
-    pub fn set_final_frame(&mut self) -> () {
-        self.is_final_frame = true;
-    }
-
-    pub fn get_frame(&self) -> Option<image::RgbImage> {
+    pub fn get_frame(&mut self) -> Option<image::RgbImage> {
         let mut output_image = image::RgbImage::new(self.width, self.height);
         output_image.copy_from_slice(&self.image);
+        self.is_final_frame = true;
         if !self.is_final_frame {
             return Some(output_image);
         } else {
