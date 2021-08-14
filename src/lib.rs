@@ -29,11 +29,11 @@ impl Camera {
         };
     }
 
-    pub fn get_frame(&self) -> image::RgbImage {
+    pub fn get_frame(&self) -> Option<image::RgbImage> {
         let frame: rscam::Frame = self.camera.capture().unwrap();
         let rgb_image =
             image::RgbImage::from_vec(self.width, self.height, (&frame[..]).to_vec()).unwrap();
-        return rgb_image;
+        return Some(rgb_image);
     }
 }
 
@@ -41,6 +41,7 @@ pub struct Picture {
     image: image::RgbImage,
     width: u32,
     height: u32,
+    is_final_frame: bool,
 }
 
 impl Picture {
@@ -53,10 +54,18 @@ impl Picture {
             image: image_,
             width: width_,
             height: height_,
+            is_final_frame: false,
         };
     }
 
-    pub fn get_frame(self) -> image::RgbImage {
-        return self.image;
+    pub fn get_frame(&mut self) -> Option<image::RgbImage> {
+        let mut output_image = image::RgbImage::new(self.width, self.height);
+        output_image.copy_from_slice(&self.image);
+        if !self.is_final_frame {
+            self.is_final_frame = true;
+            return Some(output_image);
+        } else {
+            return None;
+        }
     }
 }
