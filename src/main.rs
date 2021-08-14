@@ -32,12 +32,10 @@ fn main() {
     let args: Vec<String> = env::args().collect();
     let mut interface: SimpleImageInterface;
 
-    if args.len() < 2 {
-        interface = SimpleImageInterface::init_camera("/dev/video0", 640, 360, 330);
+    if args.len() < 2 || &args[1] == "pic" {
+        interface = SimpleImageInterface::init_picture("data/from_raw.png");
     } else if &args[1] == "video" {
         interface = SimpleImageInterface::init_camera("/dev/video0", 640, 360, 330);
-    } else if &args[1] == "pic" {
-        interface = SimpleImageInterface::init_picture("data/from_raw.png");
     } else {
         interface = SimpleImageInterface::init_camera("/dev/video0", 640, 360, 330);
     }

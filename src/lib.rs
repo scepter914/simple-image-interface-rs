@@ -17,11 +17,11 @@ impl SimpleImageInterface {
         height_: u32,
         fps_: u32,
     ) -> SimpleImageInterface {
-        return SimpleImageInterface {
+        SimpleImageInterface {
             mode: "Camera".to_string(),
             camera: Some(Camera::new(device_, width_, height_, fps_)),
             picture: None,
-        };
+        }
     }
 
     pub fn init_picture(image_path: &str) -> SimpleImageInterface {
@@ -59,17 +59,17 @@ impl Camera {
             })
             .unwrap();
         info!("Camera {}: {} * {}, {} fps", device_, width_, height_, fps_);
-        return Camera {
+        Camera {
             camera: camera_,
             width: width_,
             height: height_,
-        };
+        }
     }
     pub fn get_frame(&self) -> Option<image::RgbImage> {
         let frame: rscam::Frame = self.camera.capture().unwrap();
         let rgb_image =
             image::RgbImage::from_vec(self.width, self.height, (&frame[..]).to_vec()).unwrap();
-        return Some(rgb_image);
+        Some(rgb_image)
     }
 }
 
@@ -86,22 +86,22 @@ impl Picture {
         let width_ = image_.width();
         let height_ = image_.height();
         info!("Picture {}: {} * {}", image_path, width_, height_);
-        return Picture {
+        Picture {
             image: image_,
             width: width_,
             height: height_,
             is_final_frame: false,
-        };
+        }
     }
 
     pub fn get_frame(&mut self) -> Option<image::RgbImage> {
         let mut output_image = image::RgbImage::new(self.width, self.height);
         output_image.copy_from_slice(&self.image);
-        self.is_final_frame = true;
         if !self.is_final_frame {
-            return Some(output_image);
+            self.is_final_frame = true;
+            Some(output_image)
         } else {
-            return None;
+            None
         }
     }
 }
