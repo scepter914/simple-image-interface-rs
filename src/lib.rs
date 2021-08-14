@@ -4,6 +4,10 @@ extern crate rscam;
 
 use log::{debug, error, info, trace, warn};
 
+pub trait ImageInterface {
+    fn get_frame(&mut self) -> Option<image::RgbImage>;
+}
+
 pub struct Camera {
     camera: rscam::Camera,
     width: u32,
@@ -28,8 +32,10 @@ impl Camera {
             height: height_,
         };
     }
+}
 
-    pub fn get_frame(&self) -> Option<image::RgbImage> {
+impl ImageInterface for Camera {
+    fn get_frame(&mut self) -> Option<image::RgbImage> {
         let frame: rscam::Frame = self.camera.capture().unwrap();
         let rgb_image =
             image::RgbImage::from_vec(self.width, self.height, (&frame[..]).to_vec()).unwrap();
@@ -57,8 +63,10 @@ impl Picture {
             is_final_frame: false,
         };
     }
+}
 
-    pub fn get_frame(&mut self) -> Option<image::RgbImage> {
+impl ImageInterface for Picture {
+    fn get_frame(&mut self) -> Option<image::RgbImage> {
         let mut output_image = image::RgbImage::new(self.width, self.height);
         output_image.copy_from_slice(&self.image);
         if !self.is_final_frame {

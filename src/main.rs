@@ -1,5 +1,7 @@
 use std::env;
 
+use simple_image_interface::ImageInterface;
+
 fn my_image_proc(rgb_image: &image::RgbImage) -> () {
     let width = rgb_image.width();
     let height = rgb_image.height();
@@ -28,17 +30,23 @@ fn main() {
     .unwrap();
 
     let args: Vec<String> = env::args().collect();
-    let interface;
+    // let fruit: &Fruit = match input.as_ref() {
+    //     "1" => &apple as &Fruit,
+    //     "2" => &pine as &Fruit,
+    //     _ => panic!("error"),
+    // };
 
+    let mut interface: &ImageInterface;
     if args.len() < 2 {
-        interface = simple_image_interface::Camera::new("/dev/video0", 640, 360, 330);
+        interface = simple_image_interface::Camera::new("/dev/video0", 640, 360, 330)
+            as &simple_image_interface::Camera;
         //interface = simple_image_interface::Picture::new("data/from_raw.png");
     } else if &args[1] == "video" {
         interface = simple_image_interface::Camera::new("/dev/video0", 640, 360, 330);
         //interface = simple_image_interface::Picture::new("data/from_raw.png");
     } else if &args[1] == "pic" {
-        //interface = simple_image_interface::Picture::new("data/from_raw.png");
-        interface = simple_image_interface::Camera::new("/dev/video0", 640, 360, 330);
+        interface = simple_image_interface::Picture::new("data/from_raw.png");
+        //interface = simple_image_interface::Camera::new("/dev/video0", 640, 360, 330);
     } else {
         //interface = simple_image_interface::Picture::new("data/from_raw.png");
         interface = simple_image_interface::Camera::new("/dev/video0", 640, 360, 330);
