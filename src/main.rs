@@ -19,25 +19,36 @@ fn my_image_proc(rgb_image: &image::RgbImage) -> () {
 }
 
 fn main() {
+    simplelog::TermLogger::init(
+        simplelog::LevelFilter::Warn,
+        simplelog::Config::default(),
+        simplelog::TerminalMode::Mixed,
+        simplelog::ColorChoice::Auto,
+    )
+    .unwrap();
+
     let args: Vec<String> = env::args().collect();
     let interface;
 
     if args.len() < 2 {
-        //interface = simple_image_interface::Camera::new("/dev/video0", 640, 360, 330);
-        interface = simple_image_interface::Picture::new("data/from_raw.png");
+        interface = simple_image_interface::Camera::new("/dev/video0", 640, 360, 330);
+        //interface = simple_image_interface::Picture::new("data/from_raw.png");
     } else if &args[1] == "video" {
-        //interface = simple_image_interface::Camera::new("/dev/video0", 640, 360, 330);
-        interface = simple_image_interface::Picture::new("data/from_raw.png");
+        interface = simple_image_interface::Camera::new("/dev/video0", 640, 360, 330);
+        //interface = simple_image_interface::Picture::new("data/from_raw.png");
     } else if &args[1] == "pic" {
-        interface = simple_image_interface::Picture::new("data/from_raw.png");
-        //interface = simple_image_interface::Camera::new("/dev/video0", 640, 360, 330);
+        //interface = simple_image_interface::Picture::new("data/from_raw.png");
+        interface = simple_image_interface::Camera::new("/dev/video0", 640, 360, 330);
     } else {
-        interface = simple_image_interface::Picture::new("data/from_raw.png");
-        //interface = simple_image_interface::Camera::new("/dev/video0", 640, 360, 330);
+        //interface = simple_image_interface::Picture::new("data/from_raw.png");
+        interface = simple_image_interface::Camera::new("/dev/video0", 640, 360, 330);
     }
 
     loop {
-        let image = interface.get_frame();
-        my_image_proc(&image);
+        let input_image = interface.get_frame();
+        if input_image.is_none() {
+            break;
+        }
+        my_image_proc(&input_image.unwrap());
     }
 }
