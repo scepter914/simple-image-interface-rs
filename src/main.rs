@@ -33,11 +33,11 @@ fn main() {
     let mut interface: SimpleImageInterface;
 
     if args.len() < 2 || &args[1] == "pic" {
-        interface = SimpleImageInterface::init_picture("data/from_raw.png");
+        interface = SimpleImageInterface::new_picture("data/from_raw.png");
     } else if &args[1] == "video" {
-        interface = SimpleImageInterface::init_camera("/dev/video0", 640, 360, 330);
+        interface = SimpleImageInterface::new_camera("/dev/video0", 640, 360, 330);
     } else {
-        interface = SimpleImageInterface::init_camera("/dev/video0", 640, 360, 330);
+        interface = SimpleImageInterface::new_camera("/dev/video0", 640, 360, 330);
     }
 
     loop {

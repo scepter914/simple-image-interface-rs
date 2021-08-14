@@ -11,12 +11,7 @@ pub struct SimpleImageInterface {
 }
 
 impl SimpleImageInterface {
-    pub fn init_camera(
-        device_: &str,
-        width_: u32,
-        height_: u32,
-        fps_: u32,
-    ) -> SimpleImageInterface {
+    pub fn new_camera(device_: &str, width_: u32, height_: u32, fps_: u32) -> SimpleImageInterface {
         SimpleImageInterface {
             mode: "Camera".to_string(),
             camera: Some(Camera::new(device_, width_, height_, fps_)),
@@ -24,7 +19,7 @@ impl SimpleImageInterface {
         }
     }
 
-    pub fn init_picture(image_path: &str) -> SimpleImageInterface {
+    pub fn new_picture(image_path: &str) -> SimpleImageInterface {
         SimpleImageInterface {
             mode: "Picture".to_string(),
             camera: None,
