@@ -10,6 +10,18 @@
 
 ## Get started (Under construction)
 
+- install for rscam
+
+```
+sudo apt install libv4l-dev
+```
+
+- install for ffmpeg-next
+
+```
+sudo apt install -y clang libavcodec-dev libavformat-dev libavutil-dev pkg-config
+```
+
 - Cargo.toml
 - example
 
