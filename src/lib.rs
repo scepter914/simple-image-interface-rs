@@ -68,6 +68,8 @@ impl Camera {
     }
 }
 
+pub struct Video {}
+
 pub struct Picture {
     image: image::RgbImage,
     width: u32,
