@@ -44,8 +44,14 @@ fn main() -> Result<(), ffmpeg::Error> {
                 Ok(())
             };
 
+        let mut packet_index = 0;
+        let mut stream_index = 0;
         for (stream, packet) in ictx.packets() {
+            packet_index += 1;
+            println!("packet {}", packet_index);
             if stream.index() == video_stream_index {
+                stream_index += 1;
+                println!("index {}", stream_index);
                 decoder.send_packet(&packet)?;
                 receive_and_process_decoded_frames(&mut decoder)?;
             }
