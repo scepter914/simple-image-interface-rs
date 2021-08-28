@@ -24,7 +24,7 @@ fn my_image_proc(rgb_image: &image::RgbImage, frame_index: usize) {
 
 fn main() {
     simplelog::TermLogger::init(
-        simplelog::LevelFilter::Info,
+        simplelog::LevelFilter::Debug,
         simplelog::Config::default(),
         simplelog::TerminalMode::Mixed,
         simplelog::ColorChoice::Auto,

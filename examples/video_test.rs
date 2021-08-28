@@ -35,12 +35,28 @@ fn main() -> Result<(), ffmpeg::Error> {
         let mut receive_and_process_decoded_frames =
             |decoder: &mut ffmpeg::decoder::Video| -> Result<(), ffmpeg::Error> {
                 let mut decoded = Video::empty();
+
+                /*
+                loop {
+                    if decoder.receive_frame(&mut decoded).is_ok() {
+                        let mut rgb_frame = ffmpeg::util::frame::video::Video::empty();
+                        scaler.run(&decoded, &mut rgb_frame).unwrap();
+                        break;
+                    }
+                    println!("hoge");
+                }
+                Ok(())
+                */
+
+                // /*
                 if decoder.receive_frame(&mut decoded).is_ok() {
+                    println!("ok");
                     Ok(())
                 } else {
                     println!("ng");
                     Ok(())
                 }
+                // */
 
                 /*
                 while decoder.receive_frame(&mut decoded).is_ok() {
@@ -57,7 +73,7 @@ fn main() -> Result<(), ffmpeg::Error> {
         let mut stream_index = 0;
         for (stream, packet) in ictx.packets() {
             packet_index += 1;
-            //println!("packet {}", packet_index);
+            println!("packet {}", packet_index);
             if stream.index() == video_stream_index {
                 stream_index += 1;
                 //println!("index {}", stream_index);

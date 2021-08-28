@@ -147,11 +147,10 @@ impl Video {
                         .unwrap();
                 Some(rgb_image)
             } else {
-                println!("hoge");
                 None
             }
         } else {
-            println!("fuga");
+            debug!("End of video");
             None
         }
     }
