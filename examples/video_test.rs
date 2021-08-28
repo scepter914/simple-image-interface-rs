@@ -35,6 +35,14 @@ fn main() -> Result<(), ffmpeg::Error> {
         let mut receive_and_process_decoded_frames =
             |decoder: &mut ffmpeg::decoder::Video| -> Result<(), ffmpeg::Error> {
                 let mut decoded = Video::empty();
+                if decoder.receive_frame(&mut decoded).is_ok() {
+                    Ok(())
+                } else {
+                    println!("ng");
+                    Ok(())
+                }
+
+                /*
                 while decoder.receive_frame(&mut decoded).is_ok() {
                     let mut rgb_frame = Video::empty();
                     scaler.run(&decoded, &mut rgb_frame)?;
@@ -42,18 +50,21 @@ fn main() -> Result<(), ffmpeg::Error> {
                     frame_index += 1;
                 }
                 Ok(())
+                */
             };
 
         let mut packet_index = 0;
         let mut stream_index = 0;
         for (stream, packet) in ictx.packets() {
             packet_index += 1;
-            println!("packet {}", packet_index);
+            //println!("packet {}", packet_index);
             if stream.index() == video_stream_index {
                 stream_index += 1;
-                println!("index {}", stream_index);
+                //println!("index {}", stream_index);
                 decoder.send_packet(&packet)?;
                 receive_and_process_decoded_frames(&mut decoder)?;
+            } else {
+                println!("debug");
             }
         }
         decoder.send_eof()?;
@@ -76,7 +87,7 @@ fn save_file(frame: &Video, index: usize) -> std::result::Result<(), std::io::Er
     //     .save(format!("data/raw/frame{}.png", index))
     //     .unwrap();
     let data = rgb_image.to_vec();
-    let mut file = File::create(format!("data/raw/frame{}.ppm", index))?;
+    let mut file = File::create(format!("./result/frame{}.ppm", index))?;
     file.write_all(format!("P6\n{} {}\n255\n", frame.width(), frame.height()).as_bytes())?;
     file.write_all(&data)?;
 
