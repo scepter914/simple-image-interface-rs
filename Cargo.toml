@@ -13,8 +13,8 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-rscam = "0.5.5"
+ffmpeg-next = "4.4.0"
+image = "0.23.14"
 log = "0.4.0"
 simplelog = "0.10.0"
-image = "0.23.14"
-ffmpeg-next = "4.4.0"
+rscam = "0.5.5"

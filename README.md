@@ -2,11 +2,15 @@
 
 - This repository is simple image interface library for rust
 - Support image interface
-  - [ x ] Camera input (v4l2)
-  - [ ] Realsense
-  - [ ] Basler Camera
-  - [ ] video (mp4)
-  - [ x ] image (png, jpg)
+  - Camera
+    - [ x ] Web Camera (v4l2)
+    - [ ] Realsense
+    - [ ] Basler Camera
+  - Video
+    - [ x ] mp4
+  - Image
+    - [ x ] png
+    - [ x ] jpeg
 
 ## Get started (Under construction)
 
@@ -23,11 +27,16 @@ sudo apt install -y clang libavcodec-dev libavformat-dev libavutil-dev pkg-confi
 ```
 
 - Cargo.toml
-- example
+
+```
+"simple_image_interface" = "0.1.0"
+```
+
+- And [See example code](example/examples.rs)
 
 ## Note
 
-- use not trait object but lapper struct to improve execution speed
+- Not use trait object but lapper struct to improve execution speed
 
 ## Reference
 
