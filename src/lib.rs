@@ -134,25 +134,35 @@ impl Video {
     }
 
     pub fn get_frame(&mut self) -> Option<image::RgbImage> {
-        let (stream, packet) = self.ictx.packets().next().unwrap();
-        if stream.index() == self.video_stream_index {
-            self.decoder.send_packet(&packet).unwrap();
-            let mut decoded = ffmpeg::util::frame::video::Video::empty();
-            if self.decoder.receive_frame(&mut decoded).is_ok() {
-                let mut rgb_frame = ffmpeg::util::frame::video::Video::empty();
-                self.scaler.run(&decoded, &mut rgb_frame).unwrap();
+        let mut is_valid_frame = false;
+        while !is_valid_frame {
+            let stream_and_packet_iter = self.ictx.packets().next();
+            if stream_and_packet_iter.is_some() {
+                let (stream, packet) = stream_and_packet_iter.unwrap();
+                if stream.index() == self.video_stream_index {
+                    self.decoder.send_packet(&packet).unwrap();
+                    let mut decoded = ffmpeg::util::frame::video::Video::empty();
+                    if self.decoder.receive_frame(&mut decoded).is_ok() {
+                        let mut rgb_frame = ffmpeg::util::frame::video::Video::empty();
+                        self.scaler.run(&decoded, &mut rgb_frame).unwrap();
 
-                let rgb_image =
-                    image::RgbImage::from_vec(self.width, self.height, rgb_frame.data(0).to_vec())
+                        let rgb_image = image::RgbImage::from_vec(
+                            self.width,
+                            self.height,
+                            rgb_frame.data(0).to_vec(),
+                        )
                         .unwrap();
-                Some(rgb_image)
+                        is_valid_frame = true;
+                        return Some(rgb_image);
+                    }
+                } else {
+                    break;
+                }
             } else {
-                None
+                break;
             }
-        } else {
-            debug!("End of video");
-            None
         }
+        return None;
     }
 }
 
