@@ -2,7 +2,7 @@ use std::env;
 
 use simple_image_interface::SimpleImageInterface;
 
-fn my_image_proc(rgb_image: &image::RgbImage) -> () {
+fn my_image_proc(rgb_image: &image::RgbImage, frame_index: usize) {
     let width = rgb_image.width();
     let height = rgb_image.height();
     let mut gray_image = image::GrayImage::new(width, height);
@@ -17,12 +17,14 @@ fn my_image_proc(rgb_image: &image::RgbImage) -> () {
         }
     }
     println!("save gray scale image");
-    gray_image.save("data/sample.png").unwrap();
+    gray_image
+        .save(format!("./result/sample_{}.png", frame_index))
+        .unwrap();
 }
 
 fn main() {
     simplelog::TermLogger::init(
-        simplelog::LevelFilter::Warn,
+        simplelog::LevelFilter::Info,
         simplelog::Config::default(),
         simplelog::TerminalMode::Mixed,
         simplelog::ColorChoice::Auto,
@@ -33,18 +35,20 @@ fn main() {
     let mut interface: SimpleImageInterface;
 
     if args.len() < 2 || &args[1] == "pic" {
-        interface = SimpleImageInterface::new_picture("data/from_raw.png");
+        interface = SimpleImageInterface::new_picture("./data/from_raw.png");
     } else if &args[1] == "video" {
-        interface = SimpleImageInterface::new_camera("/dev/video0", 640, 360, 330);
+        interface = SimpleImageInterface::new_video("./data/random_ball.mp4");
     } else {
         interface = SimpleImageInterface::new_camera("/dev/video0", 640, 360, 330);
     }
 
+    let mut frame_index = 0;
     loop {
+        frame_index += 1;
         let input_image = interface.get_frame();
         if input_image.is_none() {
             break;
         }
-        my_image_proc(&input_image.unwrap());
+        my_image_proc(&input_image.unwrap(), frame_index);
     }
 }
