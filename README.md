@@ -1,18 +1,20 @@
-# simple-image-interface
+# simple-image-interface-rs
 
-- This repository is simple image interface library for rust
+- This repository is simple image interface library for rust.
+  - If you use this library, you can change easily between images, videos, and camera input.
+  - It may be useful for debug like robotics vision area.
 - Support image interface
   - Camera
-    - [ x ] Web Camera (v4l2)
+    - [x] Web Camera (v4l2)
     - [ ] Realsense
     - [ ] Basler Camera
   - Video
-    - [ x ] mp4
+    - [x] mp4
   - Image
-    - [ x ] png
-    - [ x ] jpeg
+    - [x] png
+    - [x] jpeg
 
-## Get started (Under construction)
+## Get started
 
 - install for rscam
 
@@ -32,7 +34,29 @@ sudo apt install -y clang libavcodec-dev libavformat-dev libavutil-dev pkg-confi
 "simple_image_interface" = "0.1.0"
 ```
 
-- And [See example code](example/examples.rs)
+- Make interface in
+  - In detail, [See example code](example/examples.rs)
+
+```rust
+
+    if args.len() < 2 || &args[1] == "pic" {
+        interface = SimpleImageInterface::new_picture("./data/from_raw.png");
+    } else if &args[1] == "video" {
+        interface = SimpleImageInterface::new_video("./data/random_ball.mp4");
+    } else {
+        interface = SimpleImageInterface::new_camera("/dev/video0", 640, 360, 330);
+    }
+
+    let mut frame_index = 0;
+    loop {
+        frame_index += 1;
+        let input_image = interface.get_frame();
+        if input_image.is_none() {
+            break;
+        }
+        my_image_proc(&input_image.unwrap(), frame_index);
+    }
+```
 
 ## Note
 
@@ -41,3 +65,4 @@ sudo apt install -y clang libavcodec-dev libavformat-dev libavutil-dev pkg-confi
 ## Reference
 
 - <https://github.com/loyd/rscam> : Use for Camera input
+- <https://github.com/zmwangx/rust-ffmpeg> : Use for Video input
