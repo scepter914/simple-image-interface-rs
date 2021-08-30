@@ -34,7 +34,7 @@ sudo apt install -y clang libavcodec-dev libavformat-dev libavutil-dev pkg-confi
 "simple_image_interface" = "0.1.0"
 ```
 
-- Make interface in
+- Make interface
   - In detail, [See example code](example/examples.rs)
 
 ```rust
