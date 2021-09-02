@@ -6,6 +6,7 @@ fn my_image_proc(rgb_image: &image::RgbImage, frame_index: usize) {
     let width = rgb_image.width();
     let height = rgb_image.height();
     let mut gray_image = image::GrayImage::new(width, height);
+
     // for example gray scale
     for i in 0..width {
         for j in 0..height {
@@ -16,6 +17,7 @@ fn my_image_proc(rgb_image: &image::RgbImage, frame_index: usize) {
             gray_image.put_pixel(i, j, image::Luma(gray_pixel));
         }
     }
+
     println!("save gray scale image");
     gray_image
         .save(format!("./result/sample_{}.png", frame_index))
@@ -30,7 +32,6 @@ fn main() {
         simplelog::ColorChoice::Auto,
     )
     .unwrap();
-
     let args: Vec<String> = env::args().collect();
     let mut interface: SimpleImageInterface;
 

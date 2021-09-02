@@ -45,6 +45,7 @@ sudo apt install -y clang libavcodec-dev libavformat-dev libavutil-dev pkg-confi
         interface = SimpleImageInterface::new_video("./data/random_ball.mp4");
     } else {
         interface = SimpleImageInterface::new_camera("/dev/video0", 640, 360, 330);
+        // width, height, fps
     }
 
     let mut frame_index = 0;
