@@ -14,6 +14,11 @@
     - [x] png
     - [x] jpeg
 
+## Document
+
+- [crates.io](https://crates.io/crates/simple_image_interface)
+- [docs.rs](https://docs.rs/simple_image_interface/0.1.0/simple_image_interface/)
+
 ## Get started
 
 - install for rscam
