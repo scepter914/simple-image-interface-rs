@@ -13,7 +13,7 @@ fn is_able_to_get_all_frames_from_mp4() {
             break;
         }
     }
-    assert_eq!(751, frame_index);
+    assert_eq!(146, frame_index);
 }
 
 #[test]
@@ -24,7 +24,7 @@ fn is_valid_frame_from_mp4() {
     loop {
         frame_index += 1;
         input_image = interface.get_frame();
-        if frame_index == 200 {
+        if frame_index == 80 {
             break;
         }
         if input_image.is_none() {
@@ -33,7 +33,7 @@ fn is_valid_frame_from_mp4() {
         }
         assert!(!input_image.is_none(), "invalid frame is reading");
     }
-    let path = "./data/sample_200.png";
+    let path = "./data/sample_80.png";
     let answer_img = image::open(path).unwrap().to_rgb8();
     assert_eq!(input_image.unwrap(), answer_img);
 }
