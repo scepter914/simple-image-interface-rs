@@ -36,7 +36,7 @@ sudo apt install -y clang libavcodec-dev libavformat-dev libavutil-dev pkg-confi
 - Cargo.toml
 
 ```
-"simple_image_interface" = "0.1.0"
+"simple_image_interface" = "0.1.1"
 ```
 
 - Make interface
