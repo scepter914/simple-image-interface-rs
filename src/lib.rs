@@ -70,11 +70,7 @@
 //!
 //!
 
-extern crate ffmpeg_next as ffmpeg;
-extern crate image;
-extern crate log;
-extern crate rscam;
-
+use ffmpeg_next as ffmpeg;
 use log::{debug, error, info, trace, warn};
 
 enum SimpleImageInterfaceMode {
