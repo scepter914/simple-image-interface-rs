@@ -68,6 +68,13 @@ sudo apt install -y clang libavcodec-dev libavformat-dev libavutil-dev pkg-confi
 
 - Not use trait object but lapper struct to improve execution speed
 
+## History
+
+- v0.1.1
+  - fix bug
+- v0.1.0
+  - publish initial library
+
 ## Reference
 
 - <https://github.com/loyd/rscam> : Use for Camera input
