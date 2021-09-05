@@ -68,7 +68,7 @@ impl Camera {
         let mut camera_ = rscam::new(device_).unwrap();
         camera_
             .start(&rscam::Config {
-                interval: (1, fps_), // fps.
+                interval: (1, fps_),
                 resolution: (width_, height_),
                 format: b"RGB3",
                 ..Default::default()
