@@ -36,7 +36,7 @@ sudo apt install -y clang libavcodec-dev libavformat-dev libavutil-dev pkg-confi
 - Cargo.toml
 
 ```
-"simple_image_interface" = "0.1.1"
+"simple_image_interface" = "0.1.2"
 ```
 
 - Make interface
@@ -70,6 +70,8 @@ sudo apt install -y clang libavcodec-dev libavformat-dev libavutil-dev pkg-confi
 
 ## History
 
+- v0.1.2
+  - [Reduce crate size ](https://github.com/scepter914/simple-image-interface-rs/pull/1)
 - v0.1.1
   - fix bug
 - v0.1.0
