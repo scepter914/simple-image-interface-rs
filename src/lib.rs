@@ -73,12 +73,14 @@
 use ffmpeg_next as ffmpeg;
 use log::{debug, error, info, trace, warn};
 
+/// Mode enum for SimpleImageInterface
 enum SimpleImageInterfaceMode {
     Camera,
     Video,
     Picture,
 }
 
+/// SimpleImageInterface struct
 pub struct SimpleImageInterface {
     mode: SimpleImageInterfaceMode,
     camera: Option<Camera>,
@@ -87,7 +89,12 @@ pub struct SimpleImageInterface {
 }
 
 impl SimpleImageInterface {
-    /// - Init interface from web camera input
+    /// Init interface from web camera input
+    /// # Arguments
+    /// - device_: The device name. For example, "/dev/video0"
+    /// - width_: The width of camera device
+    /// - height_: The height of camera device
+    /// - fps_: Frame per seconds
     pub fn new_camera(device_: &str, width_: u32, height_: u32, fps_: u32) -> SimpleImageInterface {
         SimpleImageInterface {
             mode: SimpleImageInterfaceMode::Camera,
@@ -97,7 +104,7 @@ impl SimpleImageInterface {
         }
     }
 
-    /// - Init interface from picture (png, jpeg)
+    /// Init interface from picture (png, jpeg)
     pub fn new_picture(image_path: impl Into<std::path::PathBuf>) -> SimpleImageInterface {
         SimpleImageInterface {
             mode: SimpleImageInterfaceMode::Picture,
@@ -107,7 +114,7 @@ impl SimpleImageInterface {
         }
     }
 
-    /// - Init interface from video (mp4)
+    /// Init interface from video (mp4)
     pub fn new_video(video_path: impl Into<std::path::PathBuf>) -> SimpleImageInterface {
         SimpleImageInterface {
             mode: SimpleImageInterfaceMode::Video,
@@ -117,8 +124,8 @@ impl SimpleImageInterface {
         }
     }
 
-    /// - get frame from interface
-    /// - If interface do not get a image, return None
+    /// Get frame from interface
+    /// If interface do not get a image, return None
     pub fn get_frame(&mut self) -> Option<image::RgbImage> {
         match self.mode {
             SimpleImageInterfaceMode::Camera => self.camera.as_ref().unwrap().get_frame(),
@@ -129,6 +136,7 @@ impl SimpleImageInterface {
     }
 }
 
+/// Camera struct
 pub struct Camera {
     camera: rscam::Camera,
     width: u32,
@@ -136,6 +144,12 @@ pub struct Camera {
 }
 
 impl Camera {
+    /// Web camera interface
+    /// # Arguments
+    /// - device_: The device name. For example, "/dev/video0"
+    /// - width_: The width of camera device
+    /// - height_: The height of camera device
+    /// - fps_: Frame per seconds
     pub fn new(device_: &str, width_: u32, height_: u32, fps_: u32) -> Camera {
         let mut camera_ = rscam::new(device_).unwrap();
         camera_
@@ -154,6 +168,8 @@ impl Camera {
         }
     }
 
+    /// Get frame from interface
+    /// If interface do not get a image, return None
     pub fn get_frame(&self) -> Option<image::RgbImage> {
         let frame: rscam::Frame = self.camera.capture().unwrap();
         let rgb_image =
@@ -162,6 +178,7 @@ impl Camera {
     }
 }
 
+/// Video struct
 pub struct Video {
     decoder: ffmpeg::decoder::Video,
     ictx: ffmpeg::format::context::Input,
@@ -206,6 +223,8 @@ impl Video {
         }
     }
 
+    /// Get frame from interface
+    /// If interface do not get a image, return None
     pub fn get_frame(&mut self) -> Option<image::RgbImage> {
         let mut is_valid_frame = false;
         while !is_valid_frame {
@@ -239,6 +258,7 @@ impl Video {
     }
 }
 
+/// Picture struct
 pub struct Picture {
     image: image::RgbImage,
     width: u32,
@@ -261,6 +281,8 @@ impl Picture {
         }
     }
 
+    /// Get frame from interface
+    /// If interface do not get a image, return None
     pub fn get_frame(&mut self) -> Option<image::RgbImage> {
         let mut output_image = image::RgbImage::new(self.width, self.height);
         output_image.copy_from_slice(&self.image);
