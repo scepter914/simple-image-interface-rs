@@ -20,7 +20,7 @@ fn my_image_proc(rgb_image: &image::RgbImage, frame_index: usize) {
 
     println!("save gray scale image");
     gray_image
-        .save(format!("./result/sample_{}.png", frame_index))
+        .save(format!("./data/result/sample_{}.png", frame_index))
         .unwrap();
 }
 
