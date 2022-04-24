@@ -70,6 +70,8 @@ sudo apt install -y clang libavcodec-dev libavformat-dev libavutil-dev pkg-confi
 
 ## History
 
+- v0.1.4
+  - rename repository name
 - v0.1.3
   - refactoring
 - v0.1.2
