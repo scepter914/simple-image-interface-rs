@@ -1,4 +1,4 @@
-# simple-image-interface-rs
+# simple-image-interface
 
 - This repository is simple image interface library for rust.
   - If you use this library, you can change easily between images, videos, and camera input.
@@ -75,7 +75,7 @@ sudo apt install -y clang libavcodec-dev libavformat-dev libavutil-dev pkg-confi
 - v0.1.3
   - refactoring
 - v0.1.2
-  - [Reduce crate size](https://github.com/scepter914/simple-image-interface-rs/pull/1)
+  - [Reduce crate size](https://github.com/scepter914/simple-image-interface/pull/1)
 - v0.1.1
   - fix bug
 - v0.1.0
