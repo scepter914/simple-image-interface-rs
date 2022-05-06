@@ -1,6 +1,6 @@
 use std::env;
 
-use simple_image_interface::SimpleImageInterface;
+use simple_image_interface::simple_image_interface::SimpleImageInterface;
 
 fn my_image_proc(rgb_image: &image::RgbImage, frame_index: usize) {
     let width = rgb_image.width();
