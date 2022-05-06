@@ -1,4 +1,4 @@
-# simple-image-interface
+# simple_image_interface
 
 - This repository is simple image interface library for rust.
   - If you use this library, you can change easily between images, videos, and camera input.
@@ -36,14 +36,16 @@ sudo apt install -y clang libavcodec-dev libavformat-dev libavutil-dev pkg-confi
 - Cargo.toml
 
 ```
-"simple_image_interface" = "0.1.2"
+"simple_image_interface" = "0.1.5"
 ```
 
 - Make interface
   - In detail, [See example code](example/examples.rs)
 
 ```rust
+use simple_image_interface::simple_image_interface::SimpleImageInterface;
 
+fn main() {
     if args.len() < 2 || &args[1] == "pic" {
         interface = SimpleImageInterface::new_picture("./data/from_raw.png");
     } else if &args[1] == "video" {
@@ -62,6 +64,7 @@ sudo apt install -y clang libavcodec-dev libavformat-dev libavutil-dev pkg-confi
         }
         my_image_proc(&input_image.unwrap(), frame_index);
     }
+}
 ```
 
 ## Note
@@ -70,6 +73,9 @@ sudo apt install -y clang libavcodec-dev libavformat-dev libavutil-dev pkg-confi
 
 ## History
 
+- v0.1.5
+  - refactoring
+  - \[caution!!\] Change module architecture
 - v0.1.4
   - rename repository name
 - v0.1.3

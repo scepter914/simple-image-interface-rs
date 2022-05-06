@@ -1,6 +1,6 @@
 [package]
 name = "simple_image_interface"
-version = "0.1.4"
+version = "0.1.5"
 description = "Simple image interface with pictures, video, and camera."
 keywords = ["camera", "video", "image", "webcam"]
 authors = ["scepter914 <scepter914@gmail.com>"]
