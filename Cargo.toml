@@ -14,8 +14,8 @@ exclude = ["data/*"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-ffmpeg-next = "4.4.0"
-image = "0.23.14"
+ffmpeg-next = "6.1.1"
+image = "0.24.7"
 log = "0.4.0"
-simplelog = "0.10.0"
+simplelog = "0.12.1"
 rscam = "0.5.5"
