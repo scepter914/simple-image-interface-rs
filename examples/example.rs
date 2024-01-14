@@ -1,4 +1,5 @@
 use std::env;
+use std::fs;
 
 use simple_image_interface::simple_image_interface::SimpleImageInterface;
 
@@ -44,6 +45,7 @@ fn main() {
         // width, height, fps
     }
 
+    let _ = fs::create_dir_all("./data/result");
     let mut frame_index = 0;
     loop {
         frame_index += 1;
