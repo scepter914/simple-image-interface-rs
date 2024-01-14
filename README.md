@@ -20,24 +20,27 @@
 - [docs.rs](https://docs.rs/simple_image_interface/0.1.0/simple_image_interface/)
 
 ## Get started
+### Install
 
-- install for rscam
+- Install for rscam
 
 ```
 sudo apt install libv4l-dev
 ```
 
-- install for ffmpeg-next
+- Install for ffmpeg-next
 
 ```
-sudo apt install -y clang libavcodec-dev libavformat-dev libavutil-dev pkg-config
+sudo apt install -y clang libavcodec-dev libavformat-dev libavutil-dev pkg-config libavdevice-dev
 ```
 
 - Cargo.toml
 
 ```
-"simple_image_interface" = "0.1.5"
+"simple_image_interface" = "0.1.6"
 ```
+
+### Example code
 
 - Make interface
   - In detail, [See example code](example/examples.rs)
@@ -67,25 +70,38 @@ fn main() {
 }
 ```
 
+- Example code execution
+
+```sh
+# Run for picture
+cargo run --release --example example pic
+
+# Run for video
+cargo run --release --example example video
+```
+
 ## Note
 
 - Not use trait object but lapper struct to improve execution speed
 
 ## History
 
+- v0.1.6
+  - [Update dependencies and fix some warnings](https://github.com/scepter914/simple-image-interface-rs/pull/2)
+  - Refactoring
 - v0.1.5
-  - refactoring
+  - Refactoring
   - \[caution!!\] Change module architecture
 - v0.1.4
-  - rename repository name
+  - Rename repository name
 - v0.1.3
-  - refactoring
+  - Refactoring
 - v0.1.2
   - [Reduce crate size](https://github.com/scepter914/simple-image-interface/pull/1)
 - v0.1.1
-  - fix bug
+  - Fix bug
 - v0.1.0
-  - publish initial library
+  - Publish initial library
 
 ## Reference
 
