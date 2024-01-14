@@ -60,7 +60,6 @@ impl SimpleImageInterface {
             SimpleImageInterfaceMode::Camera => self.camera.as_ref().unwrap().get_frame(),
             SimpleImageInterfaceMode::Picture => self.picture.as_mut().unwrap().get_frame(),
             SimpleImageInterfaceMode::Video => self.video.as_mut().unwrap().get_frame(),
-            _ => None,
         }
     }
 }

@@ -1,5 +1,4 @@
-use simple_image_interface::SimpleImageInterface;
-use std::env;
+use simple_image_interface::simple_image_interface::SimpleImageInterface;
 
 #[test]
 fn is_able_to_get_all_frames_from_mp4() {
@@ -28,7 +27,6 @@ fn is_valid_frame_from_mp4() {
             break;
         }
         if input_image.is_none() {
-            frame_index -= 1;
             break;
         }
         assert!(!input_image.is_none(), "invalid frame is reading");
@@ -66,7 +64,6 @@ fn is_valid_frame_from_picture() {
             break;
         }
         if input_image.is_none() {
-            frame_index -= 1;
             break;
         }
     }

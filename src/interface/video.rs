@@ -49,8 +49,7 @@ impl Video {
     /// Get frame from interface
     /// If interface do not get a image, return None
     pub fn get_frame(&mut self) -> Option<image::RgbImage> {
-        let mut is_valid_frame = false;
-        while !is_valid_frame {
+        loop {
             let stream_and_packet_iter = self.ictx.packets().next();
             if stream_and_packet_iter.is_some() {
                 let (stream, packet) = stream_and_packet_iter.unwrap();
@@ -67,7 +66,6 @@ impl Video {
                             rgb_frame.data(0).to_vec(),
                         )
                         .unwrap();
-                        is_valid_frame = true;
                         return Some(rgb_image);
                     }
                 } else {
