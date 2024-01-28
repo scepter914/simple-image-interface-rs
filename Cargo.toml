@@ -1,17 +1,17 @@
 [package]
 name = "simple_image_interface"
 version = "0.1.6"
+edition = "2021"
+
+license = "MIT"
 description = "Simple image interface with pictures, video, and camera."
-keywords = ["camera", "video", "image", "webcam"]
 authors = ["scepter914 <scepter914@gmail.com>"]
+readme = "README.md"
+
 repository = "https://github.com/scepter914/simple_image_interface"
 documentation = "https://docs.rs/simple_image_interface"
-license = "MIT"
-readme = "README.md"
-edition = "2018"
+keywords = ["camera", "video", "image", "webcam"]
 exclude = ["data/*"]
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 ffmpeg-next = "6.1.1"
