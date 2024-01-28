@@ -1,9 +1,13 @@
 # simple_image_interface
 
-- This repository is simple image interface library for rust.
-  - If you use this library, you can change easily between images, videos, and camera input.
-  - It may be useful for debug like robotics vision area.
-- Support image interface
+This repository is simple image interface library for rust.
+By using this library you can change easily between images, videos, and camera input.
+This may be useful for debug like robotics vision area.
+
+- Document
+  - [crates.io](https://crates.io/crates/simple_image_interface)
+  - [docs.rs](https://docs.rs/simple_image_interface/0.1.0/simple_image_interface/)
+- Supported image interface
   - Camera
     - [x] Web Camera (v4l2)
     - [ ] Realsense
@@ -13,11 +17,6 @@
   - Image
     - [x] png
     - [x] jpeg
-
-## Document
-
-- [crates.io](https://crates.io/crates/simple_image_interface)
-- [docs.rs](https://docs.rs/simple_image_interface/0.1.0/simple_image_interface/)
 
 ## Get started
 ### Install
@@ -43,7 +42,7 @@ sudo apt install -y clang libavcodec-dev libavformat-dev libavutil-dev pkg-confi
 ### Example code
 
 - Make interface
-  - In detail, [See example code](example/examples.rs)
+  - In detail, [see example code](example/examples.rs)
 
 ```rust
 use simple_image_interface::simple_image_interface::SimpleImageInterface;
@@ -82,28 +81,31 @@ cargo run --release --example example video
 
 ## Note
 
-- Not use trait object but lapper struct to improve execution speed
+- `Simple_image_interface` do not use trait object but lapper struct to improve execution speed
 
 ## History
 
+- For new release
+  - Updated README
+  - Updated Rust edition
 - v0.1.6
-  - [Update dependencies and fix some warnings](https://github.com/scepter914/simple-image-interface-rs/pull/2)
-  - Refactoring
+  - [Updated dependencies and fix some warnings](https://github.com/scepter914/simple-image-interface-rs/pull/2)
+  - Refactored
 - v0.1.5
-  - Refactoring
-  - \[caution!!\] Change module architecture
+  - Refactored
+  - \[caution!!\] Changed module architecture
 - v0.1.4
-  - Rename repository name
+  - Renamed repository name
 - v0.1.3
-  - Refactoring
+  - Refactored
 - v0.1.2
-  - [Reduce crate size](https://github.com/scepter914/simple-image-interface/pull/1)
+  - [Reduced crate size](https://github.com/scepter914/simple-image-interface/pull/1)
 - v0.1.1
-  - Fix bug
+  - Fixed bug
 - v0.1.0
-  - Publish initial library
+  - Published `simple_image_interface`
 
 ## Reference
 
-- <https://github.com/loyd/rscam> : Use for Camera input
-- <https://github.com/zmwangx/rust-ffmpeg> : Use for Video input
+- [rscam](https://github.com/loyd/rscam): Use for camera input
+- [rust-ffmpeg](https://github.com/zmwangx/rust-ffmpeg): Use for video input
