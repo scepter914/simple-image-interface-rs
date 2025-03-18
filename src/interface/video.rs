@@ -20,7 +20,9 @@ impl Video {
         let input = ictx_.streams().best(ffmpeg::media::Type::Video).unwrap();
         let video_stream_index = input.index();
 
-        let decoder_ = input.codec().decoder().video().unwrap();
+        let decoder_ = ffmpeg::codec::context::Context::from_parameters(
+            input.parameters()
+        ).unwrap().decoder().video().unwrap();
         let width_ = decoder_.width();
         let height_ = decoder_.height();
 
