@@ -14,8 +14,8 @@ keywords = ["camera", "video", "image", "webcam"]
 exclude = ["data/*"]
 
 [dependencies]
-ffmpeg-next = "7.1"
-image = "0.25"
-log = "0.4"
-simplelog = "0.12"
-rscam = "0.5"
+ffmpeg-next = "7.1.0"
+image = "0.25.2"
+log = "0.4.20"
+simplelog = "0.12.1"
+rscam = "0.5.3"
